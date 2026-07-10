@@ -158,11 +158,11 @@ body.nested main{padding-top:60px}
   <div class="intro">
     <div class="kicker">◊ the sovereign fractal</div>
     <h1>Every tool <em>holds the tree.</em><br>Every leaf <em>is a root.</em></h1>
-    <p class="lede">Forty-plus live tools in the AI-Native Solutions estate. This page demonstrates that they're not forty-plus separate things — they're one recursive pattern that composes into itself. Three flavors of the demo below.</p>
+    <p class="lede"><span id="home-count" style="color:var(--gold);font-style:normal">…</span> MIT-signed tools in the AI-Native Solutions estate, all live at <code style="color:var(--gold);font-family:'DM Mono',monospace;font-size:0.85em">sjgant80-hub.github.io</code>. This page demonstrates that they're not <span id="home-count-2">…</span> separate things — they're one recursive pattern that composes into itself at every scale. Three flavors of the demo below.</p>
   </div>
 
   <div class="grid">
-    <div><h3>A · Cube</h3><p>Six faces of a rotating 3D cube. Each face is a live embedded fall* tool. Click any face to zoom into it. From inside, open another cube. Recurse until the browser complains.</p><button class="btn primary" onclick="switchView('cube')" style="margin-top:14px">Open the cube →</button></div>
+    <div><h3>A · Cube</h3><p>Six faces of a rotating 3D cube. Each face is a live embedded fall* tool. Auto-rotates through all <span id="home-count-3">…</span> tools in the catalog. Click any face to zoom into it. From inside, open another cube.</p><button class="btn primary" onclick="switchView('cube')" style="margin-top:14px">Open the cube →</button></div>
     <div><h3>B · Matryoshka</h3><p>One HTML file containing another HTML file containing another — all inline as base64 data URIs. No external requests. Save this file to disk; the whole nested estate travels with it.</p><button class="btn primary" onclick="switchView('matryoshka')" style="margin-top:14px">Open the doll →</button></div>
     <div><h3>C · Reflex</h3><p>The tool that opens a copy of itself inside itself. Then opens another. Then another. Emacs-in-emacs. Every instance can host another. Composition without a coordinator.</p><button class="btn primary" onclick="switchView('reflex')" style="margin-top:14px">Open the reflex →</button></div>
   </div>
@@ -174,12 +174,12 @@ body.nested main{padding-top:60px}
 <section class="view" id="view-cube">
   <div class="intro">
     <div class="kicker">A · the cube</div>
-    <h2 style="font-family:'Playfair Display';font-weight:600;font-size:clamp(24px,4vw,38px);margin-bottom:14px">Six faces. <em style="color:var(--gold);font-style:italic">Six tools.</em> One rotation.</h2>
-    <p style="color:var(--muted);max-width:660px;margin:0 auto;font-size:15px">Every face is a live iframe of a real fall* tool. Click a face to zoom in. Zoomed in, click "Wrap in cube" and the tool re-embeds itself in a cube of its own. Cube in cube in cube.</p>
+    <h2 style="font-family:'Playfair Display';font-weight:600;font-size:clamp(24px,4vw,38px);margin-bottom:14px">Six faces at a time. <em style="color:var(--gold);font-style:italic">The whole catalog.</em> One rotation.</h2>
+    <p style="color:var(--muted);max-width:660px;margin:0 auto;font-size:15px">Every face is a live iframe of a real listing pulled from the live FallMarket catalog · currently <span id="cube-count" style="color:var(--gold);font-weight:600">…</span> tools. Auto-swaps through every one. Click a face to zoom. Zoomed in, click "Wrap in cube" and the tool re-embeds itself in a cube of its own.</p>
   </div>
 
   <div class="stage" id="cube-stage">
-    <div class="stage-info">click a face to zoom<br>drag to rotate manually<br>double-click to pause</div>
+    <div class="stage-info"><span id="cube-position">…</span><br>click a face to zoom<br>double-click to pause</div>
     <div class="cube-scene" id="cube-scene">
       <div class="face face-front"  data-tool="fallmirror"    data-label="FallMirror"><div class="face-label">1 · FallMirror</div><iframe src="https://sjgant80-hub.github.io/fallmirror/" title="FallMirror" loading="lazy"></iframe><a class="face-cta" href="#" onclick="zoomFace('fallmirror');return false">zoom</a></div>
       <div class="face face-back"   data-tool="shadowcompass" data-label="ShadowCompass"><div class="face-label">2 · ShadowCompass</div><iframe src="https://sjgant80-hub.github.io/shadowcompass/" title="ShadowCompass" loading="lazy"></iframe><a class="face-cta" href="#" onclick="zoomFace('shadowcompass');return false">zoom</a></div>
@@ -190,13 +190,15 @@ body.nested main{padding-top:60px}
     </div>
     <div class="stage-controls">
       <button onclick="toggleRotate()">Pause / play</button>
-      <button onclick="swapCube()">Swap faces</button>
+      <button onclick="swapCube()">Next 6 faces</button>
+      <button onclick="randomizeCube()">Random 6</button>
+      <button onclick="filterCube()">Filter…</button>
     </div>
   </div>
 
   <div style="max-width:820px;margin:20px auto 0;padding:20px 24px;background:var(--deep);border:1px solid var(--line);border-radius:8px">
     <h3>What's happening</h3>
-    <p style="color:var(--muted);font-size:14px;line-height:1.7">Each face is a real iframe pointing at a live fall* tool on GitHub Pages. Nothing is faked. Everything is signed, MIT-licensed, and runs sovereignly on your device once loaded. When you click "zoom", the target tool takes over the viewport. From inside a zoomed tool, click "Wrap this tool in a new cube" and you get a cube in a cube.</p>
+    <p style="color:var(--muted);font-size:14px;line-height:1.7">Each face is a real iframe pointing at a live listing on <code>sjgant80-hub.github.io</code>, pulled from the FallMarket catalog (<span id="what-count" style="color:var(--gold)">…</span> listings). Nothing curated, nothing faked — the whole estate rotates through the cube. Every tool signed, MIT-licensed, runs sovereignly on your device. From inside a zoomed tool, click "Wrap this tool in a new cube" and you get a cube in a cube.</p>
   </div>
 </section>
 
@@ -306,32 +308,90 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
 
 // ═══════════════════════ A · CUBE ═══════════════════════
 function toggleRotate() { document.getElementById('cube-stage').classList.toggle('paused'); }
-const FACE_POOL = [
-  { slug: 'fallmirror',        label: 'FallMirror' },
-  { slug: 'shadowcompass',     label: 'ShadowCompass' },
-  { slug: 'fallmarket',        label: 'FallMarket' },
-  { slug: 'fallfeed',          label: 'FallFeed' },
-  { slug: 'fallcolony',        label: 'FallColony' },
-  { slug: 'fall-autopilot-kit',label: 'Autopilot' },
-  { slug: 'fallprofile',       label: 'FallProfile' },
-  { slug: 'fallbond',          label: 'FallBond' },
-  { slug: 'fallswarm',         label: 'FallSwarm' },
-  { slug: 'falllineage',       label: 'FallLineage' },
-  { slug: 'fallpair',          label: 'FallPair' },
-  { slug: 'falldental',        label: 'FallDental' }
-];
+
+// FACE_POOL dynamically populated from the live FallMarket catalog
+let FACE_POOL = [];
 let poolIndex = 0;
-function swapCube() {
+let poolFilter = '';
+let autoSwapTimer = null;
+
+async function loadCatalog() {
+  try {
+    const res = await fetch('https://sjgant80-hub.github.io/fallmarket/listings.json', { cache: 'no-store' });
+    const cat = await res.json();
+    FACE_POOL = cat.listings.map(l => ({
+      slug: l.id,
+      label: l.title || l.id,
+      kind: l.kind
+    }));
+    // Update all count placeholders
+    const n = String(FACE_POOL.length);
+    document.querySelectorAll('#home-count, #home-count-2, #home-count-3, #cube-count, #what-count').forEach(el => el.textContent = n);
+    updateCubePosition();
+    return FACE_POOL.length;
+  } catch (e) {
+    console.warn('catalog fetch failed', e);
+    // Fallback seed pool
+    FACE_POOL = [
+      { slug: 'fallmirror', label: 'FallMirror' },
+      { slug: 'shadowcompass', label: 'ShadowCompass' },
+      { slug: 'fallmarket', label: 'FallMarket' },
+      { slug: 'fallfeed', label: 'FallFeed' },
+      { slug: 'fallcolony', label: 'FallColony' },
+      { slug: 'fall-autopilot-kit', label: 'Autopilot' }
+    ];
+    document.querySelectorAll('#home-count, #home-count-2, #home-count-3, #cube-count, #what-count').forEach(el => el.textContent = '6 (catalog unreachable)');
+    return 6;
+  }
+}
+
+function filteredPool() {
+  if (!poolFilter) return FACE_POOL;
+  const q = poolFilter.toLowerCase();
+  return FACE_POOL.filter(p => (p.slug + ' ' + p.label + ' ' + (p.kind || '')).toLowerCase().includes(q));
+}
+
+function updateCubePosition() {
+  const total = filteredPool().length;
+  const pos = document.getElementById('cube-position');
+  if (pos) pos.textContent = `showing ${Math.min(poolIndex + 1, total)}–${Math.min(poolIndex + 6, total)} of ${total}${poolFilter ? ' matching "' + poolFilter + '"' : ''}`;
+}
+
+function paintCube() {
+  const pool = filteredPool();
+  if (!pool.length) return;
   const faces = document.querySelectorAll('.cube-scene .face');
-  faces.forEach(f => {
-    poolIndex = (poolIndex + 1) % FACE_POOL.length;
-    const p = FACE_POOL[poolIndex];
+  faces.forEach((f, i) => {
+    const p = pool[(poolIndex + i) % pool.length];
     f.dataset.tool = p.slug;
-    f.querySelector('.face-label').textContent = p.label;
+    f.querySelector('.face-label').textContent = `${(poolIndex + i) % pool.length + 1} · ${p.label}`;
     f.querySelector('iframe').src = `https://sjgant80-hub.github.io/${p.slug}/`;
     const cta = f.querySelector('.face-cta');
     cta.onclick = (e) => { e.preventDefault(); zoomFace(p.slug); return false; };
   });
+  updateCubePosition();
+}
+
+function swapCube() {
+  const pool = filteredPool();
+  if (!pool.length) return;
+  poolIndex = (poolIndex + 6) % pool.length;
+  paintCube();
+}
+
+function randomizeCube() {
+  const pool = filteredPool();
+  if (!pool.length) return;
+  poolIndex = Math.floor(Math.random() * pool.length);
+  paintCube();
+}
+
+function filterCube() {
+  const q = prompt('Filter by kind or keyword (sdk, mcp, api, tool, fallhr, etc.). Empty = all.', poolFilter || '');
+  if (q === null) return;
+  poolFilter = q.trim();
+  poolIndex = 0;
+  paintCube();
 }
 function zoomFace(slug) {
   const zv = document.getElementById('zoom-view');
@@ -387,20 +447,30 @@ function clearNest() {
 }
 
 // ═══════════════════════ NESTED SELF-DETECTION ═══════════════════════
-(function() {
+(async function init() {
   const params = new URLSearchParams(location.search);
   const depth = parseInt(params.get('_d') || '0', 10);
   if (params.get('nested') === '1' || depth > 0) {
     document.body.classList.add('nested');
     document.getElementById('depth').textContent = depth;
   }
+  // Load the full estate catalog (async, non-blocking for view routing)
+  await loadCatalog();
+  paintCube();
+  // Auto-swap every 30s to walk through the whole estate
+  autoSwapTimer = setInterval(() => { if (!document.getElementById('cube-stage').classList.contains('paused')) swapCube(); }, 30000);
+
   if (params.get('nest')) {
-    // Wrap-in-cube target: rebuild the cube so its front face points to the requested tool
     const slug = params.get('nest');
-    const front = document.querySelector('.face-front');
-    if (front) {
-      front.querySelector('.face-label').textContent = slug;
-      front.querySelector('iframe').src = `https://sjgant80-hub.github.io/${slug}/`;
+    // Move requested tool to the front face
+    const idx = FACE_POOL.findIndex(p => p.slug === slug);
+    if (idx >= 0) { poolIndex = idx; paintCube(); }
+    else {
+      const front = document.querySelector('.face-front');
+      if (front) {
+        front.querySelector('.face-label').textContent = slug;
+        front.querySelector('iframe').src = `https://sjgant80-hub.github.io/${slug}/`;
+      }
     }
     switchView('cube');
   }
