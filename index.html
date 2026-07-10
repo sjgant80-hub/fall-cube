@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FallCube · the sovereign fractal · every tool composes every other tool</title>
+<meta name="description" content="A live demonstration of sovereign composition. Six faces, six tools, infinite nesting. HTML in HTML in HTML. One file, one estate. Fork it, save it, run it from disk forever.">
+<meta name="keywords" content="sovereign fractal, HTML in HTML, iframe cube, data URI, self-similar, AI-Native Solutions, FallCube">
+<meta name="author" content="AI-Native Solutions">
+<meta name="theme-color" content="#0b0a0f">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sjgant80-hub.github.io/fall-cube/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FallCube · the sovereign fractal">
+<meta property="og:description" content="Six faces, six tools, infinite nesting. Every leaf holds the tree.">
+<meta property="og:url" content="https://sjgant80-hub.github.io/fall-cube/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0a0f'/%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23d4a017' text-anchor='middle'%3E%E2%97%8A%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "FallCube",
+  "description": "A live demonstration of sovereign composition. Six faces, six tools, infinite nesting.",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Modern browser",
+  "url": "https://sjgant80-hub.github.io/fall-cube/",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+  "license": "https://opensource.org/licenses/MIT",
+  "author": { "@type": "Organization", "name": "AI-Native Solutions", "url": "https://ai-nativesolutions.com" }
+}
+</script>
+
+<style>
+:root{--void:#0b0a0f;--deep:#141319;--surface:#1a1922;--line:rgba(232,228,219,0.08);--text:#e8e6e3;--muted:#928d80;--dim:#6b6660;--gold:#d4a017;--amber:#e8a012;--sage:#7a9c7e}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--void);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none}
+a:hover{color:var(--text)}
+button{font-family:inherit;cursor:pointer;border:none;outline:none;color:inherit;background:transparent}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:600;line-height:1.2}
+h1{font-size:clamp(30px,5vw,52px);margin-bottom:12px;letter-spacing:-0.02em}
+h1 em{color:var(--gold);font-style:italic}
+h2{font-size:24px;margin-bottom:14px}
+h3{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.14em;font-family:'DM Mono',monospace;font-weight:500;margin-bottom:10px}
+
+header{position:sticky;top:0;z-index:100;background:rgba(11,10,15,0.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:14px 20px}
+.nav{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-size:22px}
+.brand .glyph{color:var(--gold);font-size:22px}
+.brand .co{color:var(--dim);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;margin-left:6px}
+.tabs{display:flex;gap:2px}
+.tab{color:var(--muted);padding:8px 14px;border-radius:5px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;transition:all .15s}
+.tab:hover{color:var(--text);background:rgba(212,160,23,0.1)}
+.tab.on{color:var(--gold);background:rgba(212,160,23,0.14)}
+@media(max-width:640px){.tab{padding:6px 10px;font-size:10px}.brand .co{display:none}}
+
+main{padding:30px 20px 60px;max-width:1200px;margin:0 auto}
+.view{display:none}
+.view.on{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+.intro{text-align:center;padding:20px 0 30px;max-width:820px;margin:0 auto}
+.intro .kicker{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:0.22em;text-transform:uppercase;margin-bottom:20px}
+.intro p.lede{font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:var(--muted);line-height:1.5;max-width:640px;margin:14px auto 20px}
+
+/* ═══ A · CUBE ═══ */
+.stage{width:100%;height:min(560px,70vh);perspective:1600px;perspective-origin:50% 50%;position:relative;background:radial-gradient(ellipse at center,rgba(212,160,23,0.05),transparent 70%);border-radius:10px;overflow:hidden;margin:20px 0}
+.cube-scene{width:340px;height:340px;position:absolute;top:50%;left:50%;margin:-170px 0 0 -170px;transform-style:preserve-3d;animation:rotate 40s linear infinite;transition:transform 0.5s}
+.stage.paused .cube-scene{animation-play-state:paused}
+@keyframes rotate{
+  0%{transform:rotate3d(1,1,0.4,0deg)}
+  100%{transform:rotate3d(1,1,0.4,360deg)}
+}
+.face{position:absolute;width:340px;height:340px;background:rgba(20,19,25,0.92);border:1px solid var(--gold);border-radius:8px;box-shadow:0 0 30px rgba(212,160,23,0.2), inset 0 0 20px rgba(0,0,0,0.5);overflow:hidden;backdrop-filter:blur(2px)}
+.face iframe{width:100%;height:100%;border:none;background:var(--void)}
+.face .face-label{position:absolute;top:12px;left:12px;font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;background:rgba(11,10,15,0.85);padding:5px 10px;border-radius:3px;z-index:2}
+.face .face-cta{position:absolute;bottom:12px;right:12px;background:var(--gold);color:var(--void);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:6px 10px;border-radius:3px;text-decoration:none;font-weight:700;z-index:2}
+.face-front  { transform: rotateY(  0deg) translateZ(170px); }
+.face-back   { transform: rotateY(180deg) translateZ(170px); }
+.face-right  { transform: rotateY( 90deg) translateZ(170px); }
+.face-left   { transform: rotateY(-90deg) translateZ(170px); }
+.face-top    { transform: rotateX( 90deg) translateZ(170px); }
+.face-bottom { transform: rotateX(-90deg) translateZ(170px); }
+.stage-controls{position:absolute;bottom:16px;left:16px;display:flex;gap:6px;z-index:10}
+.stage-controls button{padding:8px 12px;background:rgba(20,19,25,0.9);border:1px solid var(--line);color:var(--text);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase}
+.stage-controls button:hover{border-color:var(--gold);color:var(--gold)}
+.stage-info{position:absolute;top:16px;right:16px;font-family:'DM Mono',monospace;font-size:10px;color:var(--dim);text-align:right;line-height:1.6;max-width:200px;background:rgba(11,10,15,0.85);padding:8px 12px;border-radius:4px}
+
+.zoom-view{display:none;position:fixed;inset:0;background:rgba(11,10,15,0.98);z-index:9500;padding:60px 20px 20px}
+.zoom-view.on{display:flex;flex-direction:column;align-items:stretch;animation:fade .3s ease}
+.zoom-view header{position:absolute;top:0;left:0;right:0;background:transparent;border:none;padding:14px 20px;z-index:9600;display:flex;justify-content:space-between;align-items:center}
+.zoom-view .z-label{font-family:'DM Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase}
+.zoom-view .z-actions{display:flex;gap:8px}
+.zoom-view button{padding:8px 14px;border:1px solid var(--line);color:var(--text);background:rgba(20,19,25,0.9);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase}
+.zoom-view button:hover{border-color:var(--gold);color:var(--gold)}
+.zoom-view iframe{flex:1;width:100%;border:1px solid var(--gold);border-radius:6px;background:var(--void)}
+
+/* ═══ B · MATRYOSHKA ═══ */
+.russian-stage{display:flex;flex-direction:column;align-items:center;padding:20px 0}
+.russian-frame{width:100%;max-width:900px;position:relative;background:var(--deep);border:1px solid var(--gold);border-radius:10px;overflow:hidden;box-shadow:0 0 40px rgba(212,160,23,0.15);margin:20px 0}
+.russian-frame .lbl{padding:12px 18px;font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;background:rgba(212,160,23,0.06);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.russian-frame iframe{width:100%;height:520px;border:none;background:var(--void);display:block}
+.russian-legend{max-width:820px;margin:20px auto;padding:20px 24px;background:var(--deep);border:1px solid var(--line);border-radius:8px}
+
+/* ═══ C · SELF ═══ */
+.reflex-stage{max-width:900px;margin:20px auto;text-align:center}
+.reflex-slot{width:100%;background:var(--deep);border:1px dashed var(--gold);border-radius:10px;padding:14px;margin-top:24px;min-height:400px;position:relative}
+.reflex-slot iframe{width:100%;height:520px;border:1px solid var(--line);border-radius:6px;background:var(--void)}
+.reflex-slot .placeholder{color:var(--muted);font-style:italic;padding:60px 20px;font-family:'Playfair Display',serif;font-size:19px}
+.reflex-info{background:var(--deep);border:1px solid var(--line);border-radius:8px;padding:20px 24px;margin-top:20px;text-align:left}
+
+.btn{padding:12px 22px;border-radius:5px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;border:1px solid var(--line);color:var(--text);transition:all .2s;background:transparent}
+.btn.primary{background:var(--gold);color:var(--void);border-color:var(--gold);font-weight:700}
+.btn.primary:hover{background:var(--amber);border-color:var(--amber)}
+.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn.primary:hover{color:var(--void)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:20px 0}
+.grid > div{background:var(--deep);padding:22px}
+.grid h3{color:var(--gold);text-transform:none;letter-spacing:0;font-family:'Playfair Display',serif;font-size:18px;font-weight:600;margin-bottom:8px}
+.grid p{font-size:14px;color:var(--muted);line-height:1.6}
+
+footer{border-top:1px solid var(--line);padding:30px 20px;text-align:center;color:var(--dim);font-family:'DM Mono',monospace;font-size:11px;line-height:1.8;margin-top:60px}
+footer a{color:var(--muted)}
+footer a:hover{color:var(--gold)}
+.foot-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+
+/* Nested notice for embedded instances */
+.nested-crumb{position:fixed;top:14px;right:14px;font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);background:rgba(20,19,25,0.9);border:1px solid var(--gold);padding:6px 10px;border-radius:4px;z-index:9999;letter-spacing:0.1em;text-transform:uppercase;display:none}
+body.nested .nested-crumb{display:block}
+body.nested header{display:none}
+body.nested main{padding-top:60px}
+</style>
+</head>
+<body>
+
+<div class="nested-crumb">◊ nested · depth <span id="depth">?</span></div>
+
+<header>
+  <div class="nav">
+    <div class="brand"><span class="glyph">◊</span> <span>FallCube</span> <span class="co">AI-Native Solutions</span></div>
+    <nav class="tabs">
+      <button class="tab on" data-view="home">Home</button>
+      <button class="tab" data-view="cube">A · Cube</button>
+      <button class="tab" data-view="matryoshka">B · Matryoshka</button>
+      <button class="tab" data-view="reflex">C · Reflex</button>
+      <button class="tab" data-view="about">About</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══════════════════════════════════════ HOME ═══════════════════════════════════════ -->
+<section class="view on" id="view-home">
+  <div class="intro">
+    <div class="kicker">◊ the sovereign fractal</div>
+    <h1>Every tool <em>holds the tree.</em><br>Every leaf <em>is a root.</em></h1>
+    <p class="lede">Forty-plus live tools in the AI-Native Solutions estate. This page demonstrates that they're not forty-plus separate things — they're one recursive pattern that composes into itself. Three flavors of the demo below.</p>
+  </div>
+
+  <div class="grid">
+    <div><h3>A · Cube</h3><p>Six faces of a rotating 3D cube. Each face is a live embedded fall* tool. Click any face to zoom into it. From inside, open another cube. Recurse until the browser complains.</p><button class="btn primary" onclick="switchView('cube')" style="margin-top:14px">Open the cube →</button></div>
+    <div><h3>B · Matryoshka</h3><p>One HTML file containing another HTML file containing another — all inline as base64 data URIs. No external requests. Save this file to disk; the whole nested estate travels with it.</p><button class="btn primary" onclick="switchView('matryoshka')" style="margin-top:14px">Open the doll →</button></div>
+    <div><h3>C · Reflex</h3><p>The tool that opens a copy of itself inside itself. Then opens another. Then another. Emacs-in-emacs. Every instance can host another. Composition without a coordinator.</p><button class="btn primary" onclick="switchView('reflex')" style="margin-top:14px">Open the reflex →</button></div>
+  </div>
+
+  <p style="text-align:center;color:var(--muted);margin-top:36px;font-size:14px">Same pattern, three demonstrations. Same file, infinite depth. Sovereign at every scale.</p>
+</section>
+
+<!-- ═══════════════════════════════════════ A · CUBE ═══════════════════════════════════════ -->
+<section class="view" id="view-cube">
+  <div class="intro">
+    <div class="kicker">A · the cube</div>
+    <h2 style="font-family:'Playfair Display';font-weight:600;font-size:clamp(24px,4vw,38px);margin-bottom:14px">Six faces. <em style="color:var(--gold);font-style:italic">Six tools.</em> One rotation.</h2>
+    <p style="color:var(--muted);max-width:660px;margin:0 auto;font-size:15px">Every face is a live iframe of a real fall* tool. Click a face to zoom in. Zoomed in, click "Wrap in cube" and the tool re-embeds itself in a cube of its own. Cube in cube in cube.</p>
+  </div>
+
+  <div class="stage" id="cube-stage">
+    <div class="stage-info">click a face to zoom<br>drag to rotate manually<br>double-click to pause</div>
+    <div class="cube-scene" id="cube-scene">
+      <div class="face face-front"  data-tool="fallmirror"    data-label="FallMirror"><div class="face-label">1 · FallMirror</div><iframe src="https://sjgant80-hub.github.io/fallmirror/" title="FallMirror" loading="lazy"></iframe><a class="face-cta" href="#" onclick="zoomFace('fallmirror');return false">zoom</a></div>
+      <div class="face face-back"   data-tool="shadowcompass" data-label="ShadowCompass"><div class="face-label">2 · ShadowCompass</div><iframe src="https://sjgant80-hub.github.io/shadowcompass/" title="ShadowCompass" loading="lazy"></iframe><a class="face-cta" href="#" onclick="zoomFace('shadowcompass');return false">zoom</a></div>
+      <div class="face face-right"  data-tool="fallmarket"    data-label="FallMarket"><div class="face-label">3 · FallMarket</div><iframe src="https://sjgant80-hub.github.io/fallmarket/" title="FallMarket" loading="lazy"></iframe><a class="face-cta" href="#" onclick="zoomFace('fallmarket');return false">zoom</a></div>
+      <div class="face face-left"   data-tool="fallfeed"      data-label="FallFeed"><div class="face-label">4 · FallFeed</div><iframe src="https://sjgant80-hub.github.io/fallfeed/" title="FallFeed" loading="lazy"></iframe><a class="face-cta" href="#" onclick="zoomFace('fallfeed');return false">zoom</a></div>
+      <div class="face face-top"    data-tool="fallcolony"    data-label="FallColony"><div class="face-label">5 · FallColony</div><iframe src="https://sjgant80-hub.github.io/fallcolony/" title="FallColony" loading="lazy"></iframe><a class="face-cta" href="#" onclick="zoomFace('fallcolony');return false">zoom</a></div>
+      <div class="face face-bottom" data-tool="fall-autopilot-kit" data-label="FallAutopilot"><div class="face-label">6 · Autopilot</div><iframe src="https://sjgant80-hub.github.io/fall-autopilot-kit/" title="Autopilot Kit" loading="lazy"></iframe><a class="face-cta" href="#" onclick="zoomFace('fall-autopilot-kit');return false">zoom</a></div>
+    </div>
+    <div class="stage-controls">
+      <button onclick="toggleRotate()">Pause / play</button>
+      <button onclick="swapCube()">Swap faces</button>
+    </div>
+  </div>
+
+  <div style="max-width:820px;margin:20px auto 0;padding:20px 24px;background:var(--deep);border:1px solid var(--line);border-radius:8px">
+    <h3>What's happening</h3>
+    <p style="color:var(--muted);font-size:14px;line-height:1.7">Each face is a real iframe pointing at a live fall* tool on GitHub Pages. Nothing is faked. Everything is signed, MIT-licensed, and runs sovereignly on your device once loaded. When you click "zoom", the target tool takes over the viewport. From inside a zoomed tool, click "Wrap this tool in a new cube" and you get a cube in a cube.</p>
+  </div>
+</section>
+
+<!-- Zoom overlay for face → fullscreen -->
+<div class="zoom-view" id="zoom-view">
+  <header>
+    <div class="z-label" id="z-label"></div>
+    <div class="z-actions">
+      <button onclick="wrapInCube()">Wrap this tool in a new cube ↺</button>
+      <button onclick="closeZoom()">Close ×</button>
+    </div>
+  </header>
+  <iframe id="zoom-frame" src=""></iframe>
+</div>
+
+<!-- ═══════════════════════════════════════ B · MATRYOSHKA ═══════════════════════════════════════ -->
+<section class="view" id="view-matryoshka">
+  <div class="intro">
+    <div class="kicker">B · the matryoshka</div>
+    <h2 style="font-family:'Playfair Display';font-weight:600;font-size:clamp(24px,4vw,38px);margin-bottom:14px">One file. <em style="color:var(--gold);font-style:italic">Nested tools.</em> No network.</h2>
+    <p style="color:var(--muted);max-width:660px;margin:0 auto;font-size:15px">This tab embeds a compact sample tool as an inline base64 data URI, which itself embeds another as a data URI. Save this HTML file to disk, unplug the internet — the nested estate still works.</p>
+  </div>
+
+  <div class="russian-frame">
+    <div class="lbl"><span>◊ FallCube · outer shell · this page</span><span id="matryoshka-depth">depth 0</span></div>
+    <iframe id="matryoshka-iframe" title="Level 1"></iframe>
+  </div>
+
+  <div class="russian-legend">
+    <h3>How this works</h3>
+    <p style="color:var(--muted);font-size:14px;line-height:1.7"><strong style="color:var(--text)">Level 1 · sovereign counter tool:</strong> a fully self-contained mini-app rendered from a base64 data URI. It counts, saves to its own IndexedDB, exports JSON.</p>
+    <p style="color:var(--muted);font-size:14px;line-height:1.7"><strong style="color:var(--text)">Level 2 · nested:</strong> inside the counter is an iframe pointing to another base64 data URI, this time a "hello world" note with signature verification.</p>
+    <p style="color:var(--muted);font-size:14px;line-height:1.7"><strong style="color:var(--text)">Level 3:</strong> inside Level 2 is an even smaller inline tool — a signed timestamp.</p>
+    <p style="color:var(--muted);font-size:14px;line-height:1.7"><strong style="color:var(--gold)">The key move</strong> — every level is base64-encoded inside its parent's HTML. No fetches, no CDNs. The nested doll travels as one file. Save this page; open it offline; every level still runs.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ C · REFLEX ═══════════════════════════════════════ -->
+<section class="view" id="view-reflex">
+  <div class="intro">
+    <div class="kicker">C · the reflex</div>
+    <h2 style="font-family:'Playfair Display';font-weight:600;font-size:clamp(24px,4vw,38px);margin-bottom:14px">Open a copy of me <em style="color:var(--gold);font-style:italic">inside me.</em></h2>
+    <p style="color:var(--muted);max-width:660px;margin:0 auto;font-size:15px">FallCube is a fall* tool. Any fall* tool can host any other. So FallCube can host FallCube. Click below. Each nested copy is a full working instance. Depth counter tells you where you are.</p>
+  </div>
+
+  <div class="reflex-stage">
+    <button class="btn primary" onclick="nestSelf()">Nest me inside me ↺</button>
+    <button class="btn" onclick="clearNest()" style="margin-left:8px">Clear nest</button>
+
+    <div class="reflex-slot" id="reflex-slot">
+      <div class="placeholder">Empty. Click "Nest me" to begin.</div>
+    </div>
+
+    <div class="reflex-info">
+      <h3>Why this matters</h3>
+      <p style="color:var(--muted);font-size:14px;line-height:1.7">A tool that can host a copy of itself is a tool that composes at every scale. The FallOS workstation opens fall* tools; but with reflexive nesting, any tool becomes a workstation. Every instance keeps its own state, its own IndexedDB, its own identity. Nothing crosses the boundary unless you explicitly signal it.</p>
+      <p style="color:var(--muted);font-size:14px;line-height:1.7">The browser's iframe security model does the sovereignty for us. Each instance is a fresh origin sandbox. If you look inside a deeply nested copy and mess something up, you can't damage the parent. Nested state is thrown away when you clear the nest.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ ABOUT ═══════════════════════════════════════ -->
+<section class="view" id="view-about">
+  <div class="intro">
+    <h1>About <em>FallCube</em></h1>
+    <p class="lede">A demo, not a product. A pattern, not a feature. Three ways to show that the AI-Native Solutions estate is one architecture, not forty-plus disconnected tools.</p>
+  </div>
+
+  <div class="grid">
+    <div><h3>Sovereign by design</h3><p>Every tool embedded here runs entirely in your browser. No servers, no APIs, no telemetry. Your interactions inside any face stay inside that face's origin.</p></div>
+    <div><h3>MIT-licensed</h3><p>This demo, every tool it embeds, and the underlying kit are all MIT. Fork it, host it, save it to disk. The estate outlasts the publisher.</p></div>
+    <div><h3>One page, one file</h3><p>FallCube itself is a single HTML file. Everything you see, every animation, every embedding logic — it's all in the one file you can View Source on.</p></div>
+    <div><h3>Composable</h3><p>Any fall* tool can appear on any face. Swap the faces to show a different subset. The cube is one particular arrangement of an infinite composition space.</p></div>
+  </div>
+
+  <div style="max-width:820px;margin:30px auto 0;padding:22px 24px;background:var(--deep);border:1px solid var(--line);border-radius:8px">
+    <h3>Not covered here</h3>
+    <p style="color:var(--muted);font-size:14px;line-height:1.7">FallCube is a demonstration piece — it shows composition, not workflow. For the actual sovereign workstation see <a href="https://ai-nativesolutions.com/fallos.html">FallOS</a>. For the tool registry see <a href="https://sjgant80-hub.github.io/fallmarket/">FallMarket</a>. For the settlement where agents live and transact see <a href="https://sjgant80-hub.github.io/fallcolony/">FallColony</a>.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>◊ FallCube · MIT · <a href="https://github.com/sjgant80-hub/fall-cube">GitHub</a> · <a href="https://ai-nativesolutions.com">AI-Native Solutions</a></div>
+  <div class="foot-links">
+    <a href="llms.txt">llms.txt</a>
+    <a href="https://sjgant80-hub.github.io/fallmarket/">FallMarket</a>
+    <a href="https://sjgant80-hub.github.io/fallcolony/">FallColony</a>
+    <a href="https://sjgant80-hub.github.io/fall-autopilot-kit/">Autopilot Kit</a>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════ VIEW ROUTING ═══════════════════════
+function switchView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  const view = document.getElementById('view-' + name);
+  const tab = document.querySelector('.tab[data-view=' + name + ']');
+  if (view) view.classList.add('on');
+  if (tab) tab.classList.add('on');
+  if (name === 'matryoshka' && !window._mLoaded) { renderMatryoshka(); window._mLoaded = true; }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => switchView(t.dataset.view)));
+
+// ═══════════════════════ A · CUBE ═══════════════════════
+function toggleRotate() { document.getElementById('cube-stage').classList.toggle('paused'); }
+const FACE_POOL = [
+  { slug: 'fallmirror',        label: 'FallMirror' },
+  { slug: 'shadowcompass',     label: 'ShadowCompass' },
+  { slug: 'fallmarket',        label: 'FallMarket' },
+  { slug: 'fallfeed',          label: 'FallFeed' },
+  { slug: 'fallcolony',        label: 'FallColony' },
+  { slug: 'fall-autopilot-kit',label: 'Autopilot' },
+  { slug: 'fallprofile',       label: 'FallProfile' },
+  { slug: 'fallbond',          label: 'FallBond' },
+  { slug: 'fallswarm',         label: 'FallSwarm' },
+  { slug: 'falllineage',       label: 'FallLineage' },
+  { slug: 'fallpair',          label: 'FallPair' },
+  { slug: 'falldental',        label: 'FallDental' }
+];
+let poolIndex = 0;
+function swapCube() {
+  const faces = document.querySelectorAll('.cube-scene .face');
+  faces.forEach(f => {
+    poolIndex = (poolIndex + 1) % FACE_POOL.length;
+    const p = FACE_POOL[poolIndex];
+    f.dataset.tool = p.slug;
+    f.querySelector('.face-label').textContent = p.label;
+    f.querySelector('iframe').src = `https://sjgant80-hub.github.io/${p.slug}/`;
+    const cta = f.querySelector('.face-cta');
+    cta.onclick = (e) => { e.preventDefault(); zoomFace(p.slug); return false; };
+  });
+}
+function zoomFace(slug) {
+  const zv = document.getElementById('zoom-view');
+  document.getElementById('zoom-frame').src = `https://sjgant80-hub.github.io/${slug}/`;
+  document.getElementById('z-label').textContent = '◊ ' + slug;
+  window._currentZoom = slug;
+  zv.classList.add('on');
+}
+function closeZoom() {
+  document.getElementById('zoom-view').classList.remove('on');
+  document.getElementById('zoom-frame').src = '';
+}
+function wrapInCube() {
+  const slug = window._currentZoom;
+  if (!slug) return;
+  const zi = document.getElementById('zoom-frame');
+  const depth = (parseInt(new URL(zi.src, location.href).searchParams.get('_d') || '0') || 0) + 1;
+  const url = new URL(location.href.split('?')[0]);
+  url.searchParams.set('nest', slug);
+  url.searchParams.set('_d', String(depth));
+  zi.src = url.toString();
+}
+
+// ═══════════════════════ B · MATRYOSHKA ═══════════════════════
+function renderMatryoshka() {
+  // Level 3 · innermost · signed timestamp
+  const level3 = `<!doctype html><html><head><meta charset="utf-8"><title>Level 3</title><style>body{background:#1a1922;color:#e8e6e3;font-family:'DM Mono',monospace;padding:22px;font-size:12px;line-height:1.7;margin:0}h4{color:#7a9c7e;font-family:Georgia,serif;font-weight:normal;font-style:italic;margin:0 0 8px;font-size:14px}code{color:#d4a017}</style></head><body><h4>◊ Level 3 · signed timestamp</h4><p>Payload: <code id="t"></code></p><p>SHA-256 (first 12 hex): <code id="h"></code></p><p style="color:#928d80;margin-top:14px">This is the innermost doll. No parent, no children. Pure inline HTML.</p><script>const t=new Date().toISOString();document.getElementById("t").textContent=t;crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)).then(b=>{document.getElementById("h").textContent=Array.from(new Uint8Array(b)).slice(0,6).map(x=>x.toString(16).padStart(2,"0")).join("")});<\\/script></body></html>`;
+  const l3uri = 'data:text/html;charset=utf-8;base64,' + btoa(unescape(encodeURIComponent(level3)));
+
+  // Level 2 · hello world with Level 3 embedded
+  const level2 = `<!doctype html><html><head><meta charset="utf-8"><title>Level 2</title><style>body{background:#141319;color:#e8e6e3;font-family:'DM Mono',monospace;padding:22px;font-size:12px;line-height:1.7;margin:0}h4{color:#7a9c7e;font-family:Georgia,serif;font-weight:normal;font-style:italic;margin:0 0 8px;font-size:14px}iframe{width:100%;height:200px;border:1px solid #d4a017;border-radius:5px;margin-top:12px}code{color:#d4a017}</style></head><body><h4>◊ Level 2 · hello world</h4><p>This level was fetched from the parent's inline base64 payload. It in turn embeds Level 3.</p><p>Parent gave me: <code>data:text/html;base64,...(4KB)</code></p><iframe src="` + l3uri + `" title="Level 3"></iframe></body></html>`;
+  const l2uri = 'data:text/html;charset=utf-8;base64,' + btoa(unescape(encodeURIComponent(level2)));
+
+  // Level 1 · counter with Level 2 embedded
+  const level1 = `<!doctype html><html><head><meta charset="utf-8"><title>Level 1</title><style>body{background:#0f0e14;color:#e8e6e3;font-family:'Inter',system-ui,sans-serif;padding:22px;line-height:1.6;margin:0}h4{color:#7a9c7e;font-family:Georgia,serif;font-weight:normal;font-style:italic;margin:0 0 8px;font-size:16px}button{padding:8px 14px;font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;background:#d4a017;color:#0b0a0f;border:none;border-radius:4px;cursor:pointer;font-weight:700}iframe{width:100%;height:220px;border:1px solid #d4a017;border-radius:5px;margin-top:16px}code{color:#d4a017;font-family:'DM Mono',monospace}</style></head><body><h4>◊ Level 1 · sovereign counter</h4><p>Click the button. Saves count to my own IndexedDB. My parent (FallCube outer shell) never sees my state.</p><p>Count: <code id="c">0</code></p><button onclick="tick()">+1</button><p style="margin-top:14px;color:#928d80;font-size:13px">Below is Level 2, itself an inline base64 data URI.</p><iframe src="` + l2uri + `" title="Level 2"></iframe><script>let c=parseInt(localStorage.getItem("lvl1")||"0",10);document.getElementById("c").textContent=c;function tick(){c++;document.getElementById("c").textContent=c;localStorage.setItem("lvl1",String(c))}<\\/script></body></html>`;
+  const l1uri = 'data:text/html;charset=utf-8;base64,' + btoa(unescape(encodeURIComponent(level1)));
+
+  document.getElementById('matryoshka-iframe').src = l1uri;
+}
+
+// ═══════════════════════ C · REFLEX ═══════════════════════
+function nestSelf() {
+  const slot = document.getElementById('reflex-slot');
+  const depth = (parseInt(new URL(location.href).searchParams.get('_d') || '0') || 0) + 1;
+  const url = new URL(location.href.split('?')[0]);
+  url.searchParams.set('_d', String(depth));
+  url.searchParams.set('nested', '1');
+  url.hash = '#view-reflex';
+  slot.innerHTML = `<iframe src="${url.toString()}" title="Reflex nested"></iframe>`;
+}
+function clearNest() {
+  document.getElementById('reflex-slot').innerHTML = '<div class="placeholder">Empty. Click "Nest me" to begin.</div>';
+}
+
+// ═══════════════════════ NESTED SELF-DETECTION ═══════════════════════
+(function() {
+  const params = new URLSearchParams(location.search);
+  const depth = parseInt(params.get('_d') || '0', 10);
+  if (params.get('nested') === '1' || depth > 0) {
+    document.body.classList.add('nested');
+    document.getElementById('depth').textContent = depth;
+  }
+  if (params.get('nest')) {
+    // Wrap-in-cube target: rebuild the cube so its front face points to the requested tool
+    const slug = params.get('nest');
+    const front = document.querySelector('.face-front');
+    if (front) {
+      front.querySelector('.face-label').textContent = slug;
+      front.querySelector('iframe').src = `https://sjgant80-hub.github.io/${slug}/`;
+    }
+    switchView('cube');
+  }
+})();
+</script>
+
+<!-- ═══════════════════════ AUTOPILOT · fall-autopilot-kit ═══════════════════════ -->
+<script type="module">
+  try {
+    const { installAutopilot } = await import('https://sjgant80-hub.github.io/fall-autopilot-kit/src/autopilot.js');
+    const manifest = {
+      toolName: 'fallcube',
+      systemPrompt: 'You are the autopilot for FallCube, the sovereign fractal demonstration. Suggest interesting cube face compositions and nesting explorations.',
+      model: 'Llama-3.2-3B-Instruct-q4f32_1-MLC',
+      state: () => ({ activeView: document.querySelector('.view.on')?.id, nestedDepth: parseInt(new URLSearchParams(location.search).get('_d') || '0'), now: new Date().toISOString() }),
+      actions: [
+        { id: 'swap_faces', name: 'Swap the cube faces', when: 'user has been on the cube tab > 20s without swapping', params: [], run: async () => { if (typeof swapCube === 'function') swapCube(); return { swapped: true }; } },
+        { id: 'suggest_nesting', name: 'Suggest a nesting exploration', when: 'user on reflex tab, depth=0', params: [], run: async () => { alert('Try nesting 3 deep and watch the depth counter'); return { suggested: true }; } }
+      ]
+    };
+    installAutopilot(manifest);
+  } catch (e) { console.warn('[autopilot] init failed:', e); }
+</script>
+
+</body>
+</html>

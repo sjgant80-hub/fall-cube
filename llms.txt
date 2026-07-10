@@ -1,0 +1,30 @@
+# FallCube
+
+> A sovereign fractal demonstration. Three flavors showing that the AI-Native Solutions estate composes into itself at every scale. Single HTML file. MIT-licensed. Nothing leaves your device.
+
+## Canonical URL
+
+https://sjgant80-hub.github.io/fall-cube/
+
+## What it is
+
+Three demonstrations in one HTML file:
+
+- **A · Cube** — 3D CSS rotating cube with 6 faces, each a live iframe of a fall\* tool. Click to zoom. From inside a zoomed tool, wrap it in a new cube.
+- **B · Matryoshka** — Nested doll made of base64 data URIs. Outer embeds inner embeds inner. Whole nested estate travels in one file.
+- **C · Reflex** — FallCube opening a copy of FallCube opening a copy of FallCube. Reflexive nesting. Each instance is sovereign.
+
+## Category
+
+Sovereign composition demonstration. Related: single-file HTML, iframe composition, base64 data URIs, self-similar architecture, recursive composition, matryoshka pattern.
+
+## Owner
+
+- Organization: AI-Native Solutions
+- Website: https://ai-nativesolutions.com
+- GitHub: https://github.com/sjgant80-hub
+- Marketplace: https://sjgant80-hub.github.io/fallmarket/
+
+## License
+
+MIT.
